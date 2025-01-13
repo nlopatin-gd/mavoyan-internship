@@ -161,7 +161,7 @@
     The Garbage collector: 
     ![Screenshot](../screenshots/java_task/11.png)
 
-9. Launch Jenkins WAR as a standalone application, verify that it works.
+10. Launch Jenkins WAR as a standalone application, verify that it works.
 
     ![Screenshot](../screenshots/java_task/12.png)
 

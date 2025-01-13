@@ -128,10 +128,10 @@
     <br/>
     a. What type of error will you get?
     <br/>
-    ``` SEVERE [Jenkins initialization thread] hudson.util.BootFailure.publish Failed to initialize Jenkins
+    ``` 
+    SEVERE [Jenkins initialization thread] hudson.util.BootFailure.publish Failed to initialize Jenkins
     
     Caused by: java.lang.OutOfMemoryError: Java heap space
-    
     ```
     <br/>
     b. Increase min heap size to 1G and max heap size to 3G, enable parallel garbage collector.

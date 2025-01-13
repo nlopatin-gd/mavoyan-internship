@@ -23,57 +23,71 @@
 
 1) Download/install Tomcat server. <br/>
     I have downloaded the tar.gz of Tomcat 10 and installed that.
+    ```
+    curl -O https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.34/bin/apache-tomcat-10.1.34.tar.gz
+    tar -xzvf apache-tomcat-10.1.34.tar.gz
+    ```
 2) Verify that it works by visiting the root page. <br/>
     I have started the Tomcat with the startup.sh script.
-    <br/>
+    ```
+    cd apache-tomcat-10.1.34/bin
+    bash startup.sh
+    ```
     ![Screenshot](../screenshots/java_task/1.png)
     <br/>
     a. What ports are used by the java process?
-    <br/>
     ![Screenshot](../screenshots/java_task/2.png)
 3) Remove all default applications (including manager), restart Tomcat.
-    <br/>
+    ```
+    cd ../webapps
+    rm -rf *
+    cd ../bin
+    ```
     ![Screenshot](../screenshots/java_task/3.png)
     <br/>
     For restarting tomcat(in bin directory): 
-    `` sh shutdown.sh && sh startup.sh ``
+    <br/>
+    ``` bash shutdown.sh && bash startup.sh ```
 4) Download Jenkins WAR and deploy into Tomcat.
     <br/>
     Downloaded Jenkins WAR from Jenkins site, moved that to apache-tomcat-10.1.34/webapps
+    ```
+    cd ../webapps
+    curl -O https://get.jenkins.io/war-stable/2.479.3/jenkins.war
+    ```
    ![Screenshot](../screenshots/java_task/4.png)
 5) Verify that application works (visit application URL).
     <br/>
     Starting Tomcat and visiting localhost:8080/jenkins
-    <br/>
     ![Screenshot](../screenshots/java_task/5.png)
 
-## Not sure in this steps
 6) Enable JMX in Tomcat.
     <br/>
     For this point I have created setenv.sh file:
-    `` vim setenv.sh && chmod 755 setenv.sh ``
-    The content of the file:
+    ``` touch setenv.sh && chmod 755 setenv.sh ```
     ```
-    #!/bin/sh
+        echo "#!/bin/sh
 
-    CATALINA_OPTS="-Dcom.sun.management.jmxremote \
-    -Dcom.sun.management.jmxremote.port=9000 \
-    -Dcom.sun.management.jmxremote.ssl=false \
-    -Dcom.sun.management.jmxremote.authenticate=false \ 
+            CATALINA_OPTS="-Dcom.sun.management.jmxremote \
+            -Dcom.sun.management.jmxremote.port=9000 \
+            -Dcom.sun.management.jmxremote.ssl=false \
+            -Dcom.sun.management.jmxremote.authenticate=false \
+            " > setenv.sh
     ```
-
     With this we setting the port for jmx to 9000 and disabling ssl and authentication.
     (I've used this documentation https://geekflare.com/dev/enable-jmx-tomcat-to-monitor-administer/)
     
     <br/>
-    And then opened Monitoring and Managment console, using `` .jconsole.sh `` in java.
+    And then opened Monitoring and Managment console, using 
+    ``` ./jconsole.sh ```.
+
     ![Screenshot](../screenshots/java_task/6.png)
     <br/>
     Connected with remote process using my localhost:9000
     ![Screenshot](../screenshots/java_task/7.png)
     <br/>
     a. What ports are used by the java process?
-   ![Screenshot](../screenshots/java_task/8.png)
+    ![Screenshot](../screenshots/java_task/8.png)
     <br/>
     b. Change CATALINA_OPTS to use same for RMI as for JMX
     <br/>
@@ -83,27 +97,45 @@
 
     ```
     -Djava.rmi.server.hostname=localhost \
+    -Dcom.sun.management.jmxremote.rmi.port=9000
+    ```
+    The whole picture
+
+    ```
+    #!/bin/sh
+
+    CATALINA_OPTS="-Dcom.sun.management.jmxremote \
+    -Dcom.sun.management.jmxremote.port=9000 \
+    -Dcom.sun.management.jmxremote.ssl=false \
+    -Dcom.sun.management.jmxremote.authenticate=false \
+    -Djava.rmi.server.hostname=localhost \
     -Dcom.sun.management.jmxremote.rmi.port=9000"
     ```
 
-    <br/>
     ![Screenshot](../screenshots/java_task/9.png)
 
 7. Rerun tomcat with min heap size 10M and max heap size 20M.
+    Shutdown the Tomcat: ``` bash shutdown.sh ```
     <br/>
     Added following to my setenv.sh
 
-        CATALINA_OPTS="$CATALINA_OPTS -Xms10m"
-        CATALINA_OPTS="$CATALINA_OPTS -Xmx20m"
-        export CATALINA_OPTS
-
-
+    ```
+    echo "
+    CATALINA_OPTS="$CATALINA_OPTS -Xms10m"
+    CATALINA_OPTS="$CATALINA_OPTS -Xmx20m"
+    export CATALINA_OPTS
+    ```
     <br/>
     a. What type of error will you get?
     <br/>
-    -I dont see any errors
+    `` SEVERE [Jenkins initialization thread] hudson.util.BootFailure.publish Failed to initialize Jenkins
+    
+    Caused by: java.lang.OutOfMemoryError: Java heap space
+    
+    ``
     <br/>
     b. Increase min heap size to 1G and max heap size to 3G, enable parallel garbage collector.
+
     <br/>
     My setenv.sh:
     
@@ -129,9 +161,8 @@
     The Garbage collector: 
     ![Screenshot](../screenshots/java_task/11.png)
 
-## No problem with this part
 10. Launch Jenkins WAR as a standalone application, verify that it works.
-    </br>
+
     ![Screenshot](../screenshots/java_task/12.png)
 
 

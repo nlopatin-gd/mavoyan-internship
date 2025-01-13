@@ -36,6 +36,10 @@
     ![Screenshot](../screenshots/java_task/1.png)
     <br/>
     a. What ports are used by the java process?
+    ```
+    ps aux | grep java
+    lsof -i -n -P | grep java
+    ```
     ![Screenshot](../screenshots/java_task/2.png)
 3) Remove all default applications (including manager), restart Tomcat.
     ```

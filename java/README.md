@@ -76,8 +76,7 @@
     CATALINA_OPTS="-Dcom.sun.management.jmxremote \
     -Dcom.sun.management.jmxremote.port=9000 \
     -Dcom.sun.management.jmxremote.ssl=false \
-    -Dcom.sun.management.jmxremote.authenticate=false \
-    "' > setenv.sh
+    -Dcom.sun.management.jmxremote.authenticate=false \"' > setenv.sh
 
     ```
     With this we setting the port for jmx to 9000 and disabling ssl and authentication.
@@ -86,6 +85,7 @@
     <br/>
     And then opened Monitoring and Managment console, using 
     ``` 
+    cd /usr/bin
     ./jconsole.sh
     ```
 
@@ -95,6 +95,9 @@
     ![Screenshot](../screenshots/java_task/7.png)
     <br/>
     a. What ports are used by the java process?
+    ```
+    lsof -i -n -P | grep java
+    ```
     ![Screenshot](../screenshots/java_task/8.png)
     <br/>
     b. Change CATALINA_OPTS to use same for RMI as for JMX
@@ -128,10 +131,9 @@
     Added following to my setenv.sh
 
     ```
-    echo "
-    CATALINA_OPTS="$CATALINA_OPTS -Xms10m"
+    echo 'CATALINA_OPTS="$CATALINA_OPTS -Xms10m"
     CATALINA_OPTS="$CATALINA_OPTS -Xmx20m"
-    export CATALINA_OPTS
+    export CATALINA_OPTS' >> setenv.sh
     ```
     <br/>
     a. What type of error will you get?
@@ -140,7 +142,9 @@
     SEVERE [Jenkins initialization thread] hudson.util.BootFailure.publish Failed to initialize Jenkins
     
     Caused by: java.lang.OutOfMemoryError: Java heap space
+
     ```
+    ![Screenshot](../screenshots/java_task/error_part.png)
     <br/>
     b. Increase min heap size to 1G and max heap size to 3G, enable parallel garbage collector.
 

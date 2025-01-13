@@ -49,10 +49,9 @@
     ```
     <br/>
     For restarting tomcat(in bin directory): 
-    <br/>
-    ``
+    ```
     bash shutdown.sh && bash startup.sh 
-    ``
+    ```
 4) Download Jenkins WAR and deploy into Tomcat.
     <br/>
     Downloaded Jenkins WAR from Jenkins site, moved that to apache-tomcat-10.1.34/webapps

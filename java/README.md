@@ -165,6 +165,7 @@
     CATALINA_OPTS="$CATALINA_OPTS -Xmx3g"
     CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
     export CATALINA_OPTS 
+    
     ```
 
 8. Connect by JConsole to Tomcat and look around.

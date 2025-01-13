@@ -73,11 +73,11 @@
     ```
         echo '#!/bin/sh
 
-                CATALINA_OPTS="-Dcom.sun.management.jmxremote \
-                -Dcom.sun.management.jmxremote.port=9000 \
-                -Dcom.sun.management.jmxremote.ssl=false \
-                -Dcom.sun.management.jmxremote.authenticate=false \
-                "' > setenv.sh
+CATALINA_OPTS="-Dcom.sun.management.jmxremote \
+-Dcom.sun.management.jmxremote.port=9000 \
+-Dcom.sun.management.jmxremote.ssl=false \
+-Dcom.sun.management.jmxremote.authenticate=false \
+"' > setenv.sh
 
     ```
     With this we setting the port for jmx to 9000 and disabling ssl and authentication.

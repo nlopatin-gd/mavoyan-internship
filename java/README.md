@@ -44,13 +44,15 @@
 3) Remove all default applications (including manager), restart Tomcat.
     ```
     cd ../webapps
-    rm -rf *
+    rm -rf docs examples host-manager manager
     cd ../bin
     ```
     <br/>
     For restarting tomcat(in bin directory): 
     <br/>
-    ``` bash shutdown.sh && bash startup.sh ```
+    ``` 
+    bash shutdown.sh && bash startup.sh 
+    ```
 4) Download Jenkins WAR and deploy into Tomcat.
     <br/>
     Downloaded Jenkins WAR from Jenkins site, moved that to apache-tomcat-10.1.34/webapps
@@ -69,13 +71,14 @@
     For this point I have created setenv.sh file:
     ``` touch setenv.sh && chmod 755 setenv.sh ```
     ```
-        echo "#!/bin/sh
+        echo '#!/bin/sh
 
-            CATALINA_OPTS="-Dcom.sun.management.jmxremote \
-            -Dcom.sun.management.jmxremote.port=9000 \
-            -Dcom.sun.management.jmxremote.ssl=false \
-            -Dcom.sun.management.jmxremote.authenticate=false \
-            " > setenv.sh
+                CATALINA_OPTS="-Dcom.sun.management.jmxremote \
+                -Dcom.sun.management.jmxremote.port=9000 \
+                -Dcom.sun.management.jmxremote.ssl=false \
+                -Dcom.sun.management.jmxremote.authenticate=false \
+                "' > setenv.sh
+
     ```
     With this we setting the port for jmx to 9000 and disabling ssl and authentication.
     (I've used this documentation https://geekflare.com/dev/enable-jmx-tomcat-to-monitor-administer/)

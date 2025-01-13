@@ -173,7 +173,9 @@
     ![Screenshot](../screenshots/java_task/11.png)
 
 10. Launch Jenkins WAR as a standalone application, verify that it works.
-
+    ```
+    java -jar jenkins.war
+    ```
     ![Screenshot](../screenshots/java_task/12.png)
 
 

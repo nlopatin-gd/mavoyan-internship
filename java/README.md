@@ -142,8 +142,8 @@
     SEVERE [Jenkins initialization thread] hudson.util.BootFailure.publish Failed to initialize Jenkins
     
     Caused by: java.lang.OutOfMemoryError: Java heap space
-
     ```
+    
     ![Screenshot](../screenshots/java_task/error_part.png)
     <br/>
     b. Increase min heap size to 1G and max heap size to 3G, enable parallel garbage collector.
@@ -165,7 +165,7 @@
     CATALINA_OPTS="$CATALINA_OPTS -Xmx3g"
     CATALINA_OPTS="$CATALINA_OPTS -XX:+UseParallelGC"
     export CATALINA_OPTS 
-    
+
     ```
 
 8. Connect by JConsole to Tomcat and look around.

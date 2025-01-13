@@ -26,26 +26,26 @@
 2) Verify that it works by visiting the root page. <br/>
     I have started the Tomcat with the startup.sh script.
     <br/>
-    <img width="1320" alt="Screenshot 2025-01-08 at 11 54 20" src="https://github.com/user-attachments/assets/cc5920dc-e0ed-4a6d-b8b5-19c9a9599d77" />
+    ![Screenshot](../screenshots/java_task/1.png)
     <br/>
     a. What ports are used by the java process?
     <br/>
-    <img width="1512" alt="Screenshot 2025-01-07 at 10 00 48" src="https://github.com/user-attachments/assets/234ab9bc-2010-4a6e-828b-03fecaf8c78a" />
+    ![Screenshot](../screenshots/java_task/2.png)
 3) Remove all default applications (including manager), restart Tomcat.
     <br/>
-    <img width="735" alt="Screenshot 2025-01-07 at 10 03 48" src="https://github.com/user-attachments/assets/cd663fe4-b612-4463-afb7-cf8003892d53" />
+    ![Screenshot](../screenshots/java_task/3.png)
     <br/>
     For restarting tomcat(in bin directory): 
     `` sh shutdown.sh && sh startup.sh ``
 4) Download Jenkins WAR and deploy into Tomcat.
     <br/>
     Downloaded Jenkins WAR from Jenkins site, moved that to apache-tomcat-10.1.34/webapps
-    <img width="344" alt="Screenshot 2025-01-07 at 10 13 50" src="https://github.com/user-attachments/assets/746ee9ab-dbfb-4943-ad90-158b94cd7f9a" />
+   ![Screenshot](../screenshots/java_task/4.png)
 5) Verify that application works (visit application URL).
     <br/>
     Starting Tomcat and visiting localhost:8080/jenkins
     <br/>
-    <img width="1505" alt="Screenshot 2025-01-07 at 10 14 38" src="https://github.com/user-attachments/assets/d7e91189-0f6c-47af-9de1-297ad90ca015" />
+    ![Screenshot](../screenshots/java_task/5.png)
 
 ## Not sure in this steps
 6) Enable JMX in Tomcat.
@@ -67,13 +67,13 @@
     
     <br/>
     And then opened Monitoring and Managment console, using `` .jconsole.sh `` in java.
-    <img width="891" alt="Screenshot 2025-01-07 at 10 46 52" src="https://github.com/user-attachments/assets/abf932c9-ca4f-4a25-8a0f-1abc2e2cecdf" />
+    ![Screenshot](../screenshots/java_task/6.png)
     <br/>
     Connected with remote process using my localhost:9000
-    <img width="894" alt="Screenshot 2025-01-07 at 10 59 47" src="https://github.com/user-attachments/assets/7f93eb65-defb-4ca6-bc68-1cacf7a37970" />
+    ![Screenshot](../screenshots/java_task/7.png)
     <br/>
     a. What ports are used by the java process?
-    <img width="1263" alt="Screenshot 2025-01-07 at 11 18 41" src="https://github.com/user-attachments/assets/bd1a97c1-9ea0-4be4-96d5-0ab714f3d5aa" />
+   ![Screenshot](../screenshots/java_task/8.png)
     <br/>
     b. Change CATALINA_OPTS to use same for RMI as for JMX
     <br/>
@@ -87,7 +87,7 @@
     ```
 
     <br/>
-    <img width="1512" alt="Screenshot 2025-01-07 at 11 55 28" src="https://github.com/user-attachments/assets/7f780db0-fb2b-41e8-a60a-6a2bc0e7eebe" />
+    ![Screenshot](../screenshots/java_task/9.png)
 
 7. Rerun tomcat with min heap size 10M and max heap size 20M.
     <br/>
@@ -124,15 +124,15 @@
     ```
 
 8. Connect by JConsole to Tomcat and look around.
-    <img width="883" alt="Screenshot 2025-01-07 at 12 25 56" src="https://github.com/user-attachments/assets/459a4fdf-0f1c-4c2f-a55d-bd609f0a8ae4" />
+    ![Screenshot](../screenshots/java_task/10.png)
     <br/>
     The Garbage collector: 
-    <img width="877" alt="Screenshot 2025-01-07 at 12 25 24" src="https://github.com/user-attachments/assets/e5ca3a5a-58e6-4f82-8145-dab6403d31f7" />
+    ![Screenshot](../screenshots/java_task/11.png)
 
 ## No problem with this part
 10. Launch Jenkins WAR as a standalone application, verify that it works.
     </br>
-    <img width="1263" alt="Screenshot 2025-01-07 at 12 41 09" src="https://github.com/user-attachments/assets/c01fad83-3eed-494a-b2f8-5a3cc175d69b" />
+    ![Screenshot](../screenshots/java_task/12.png)
 
 
 

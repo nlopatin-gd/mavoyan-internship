@@ -43,7 +43,6 @@
     rm -rf *
     cd ../bin
     ```
-    ![Screenshot](../screenshots/java_task/3.png)
     <br/>
     For restarting tomcat(in bin directory): 
     <br/>
@@ -79,7 +78,9 @@
     
     <br/>
     And then opened Monitoring and Managment console, using 
-    ``` ./jconsole.sh ```.
+    ``` 
+    ./jconsole.sh
+    ```
 
     ![Screenshot](../screenshots/java_task/6.png)
     <br/>

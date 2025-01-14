@@ -2,10 +2,10 @@
 
 ## The task
 
-1. Install locally the latest versions of Java and Maven.
+1. Install locally the latest versions of Java and Maven. 
 Java Downloads | Oracle
 Download Apache Maven 
-​2. ​Go to https://github.com/spring-projects/spring-petclinic, fork it and clone the forked repo.
+2. ​Go to https://github.com/spring-projects/spring-petclinic, fork it and clone the forked repo.
 3. Perform validation to check if the project is correct.
 4. Build JAR artifact from source code, run the application locally and see the web interface in the browser.
 5. Increase project Major version (e.g. from 3.2.0 to 4.0.0) without interactive mode. Use release plugin.
@@ -137,5 +137,60 @@ Result:
 
 ![screenshot](../screenshots/maven_task/8.png)
 ![screenshot](../screenshots/maven_task/9.png)
+
+8.Try to perform the release of artifacts.
+
+For this step I have added some configurations in pom.xml file
+
+```
+<scm>
+    <connection>scm:git:https://github.com/avmang/spring-petclinic.git</connection>
+    <developerConnection>scm:git:https://github.com/avmang/spring-petclinic.git</developerConnection>
+    <url>https://github.com/avmang/spring-petclinic</url>
+  </scm>
+```
+And changed release plugin part
+```
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <releaseProfiles>release</releaseProfiles>
+          <scmUrl>scm:git:https://github.com/avmang/spring-petclinic.git</scmUrl>
+          <goals>install</goals>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <checkModificationExcludes>
+              <checkModificationExclude>pom.xml</checkModificationExclude>
+              <checkModificationExclude>**</checkModificationExclude>
+          </checkModificationExcludes>
+        </configuration>
+      </plugin>
+```
+
+The next steps are
+
+```
+ mvn --batch-mode -Dtag=my-proj-4.0.0 release:prepare \
+                 -DreleaseVersion=4.0.0 \
+                 -DdevelopmentVersion=4.0.1-SNAPSHOT -Dresume=false
+mvn release:clean release:prepare
+mvn -X release:perform
+```
+The result:
+
+![screenshot](../screenshots/maven_task/10.png)
+
+9. Perform release cleanup.
+<br/>
+To do this I used this command
+```
+mvn release:cleanup
+```
+
+
+
+
+
 
 

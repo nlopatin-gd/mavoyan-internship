@@ -185,6 +185,7 @@ The result:
 9. Perform release cleanup.
 <br/>
 To do this I used this command
+
 ```
 mvn release:cleanup
 ```

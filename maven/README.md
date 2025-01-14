@@ -128,6 +128,7 @@ The important part from the screeshot above
 <br/>
 - You can now continue with release:perform, or start again using the -Dresume=false flag
 So lets execute this command
+
 ```
 mvn --batch-mode -Dtag=my-proj-4.0.0 release:prepare \
                  -DreleaseVersion=4.0.0 \

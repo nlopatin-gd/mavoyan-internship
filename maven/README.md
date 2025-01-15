@@ -114,6 +114,7 @@ git commit -m "commit message"
 ```
 <br/>
 We need to run this command once again.
+
 ```
 mvn -B release:prepare
 ```
@@ -155,6 +156,7 @@ For this step I have added some configurations in pom.xml file
     <connection>scm:git:https://github.com/<username>/spring-petclinic.git</connection>
     <developerConnection>scm:git:https://github.com/<username>/spring-petclinic.git</developerConnection>
     <url>https://github.com/<username>/spring-petclinic</url>
+    <tag>HEAD</tag>
   </scm>
 ```
 And changed release plugin part
@@ -178,10 +180,10 @@ And changed release plugin part
 The next steps are
 
 ```
- mvn --batch-mode -Dtag=my-proj-4.0.0 release:prepare \
-                 -DreleaseVersion=4.0.0 \
-                 -DdevelopmentVersion=4.0.1-SNAPSHOT -Dresume=false
-mvn release:clean release:prepare
+mvn --batch-mode -DreleaseVersion=4.0.0 -DdevelopmentVersion=4.0.1-SNAPSHOT -Dresume=true release:prepare
+
+mvn release:clean -Dresume=true
+mvn --batch-mode -DreleaseVersion=4.0.0 -DdevelopmentVersion=4.0.1-SNAPSHOT -Dresume=true release:prepare
 mvn -X release:perform
 ```
 The result:

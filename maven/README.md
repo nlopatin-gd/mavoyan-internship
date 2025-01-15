@@ -195,7 +195,7 @@ The result:
 To do this I used this command
 
 ```
-mvn release:cleanup
+mvn release:clean
 ```
 
 

@@ -31,8 +31,12 @@ tar -xzvf apache-maven-3.9.9-bin.tar.gz
 ```
 Add maven to path with the following code in home directory.
 ```
-echo "export M2_HOME=/usr/local/apache-maven
-export PATH=$M2_HOME/bin:$PATH:" >> .zprofile
+sudo mv apache-maven-3.9.9 /usr/local
+
+echo "export MAVEN_HOME=/usr/local/apache-maven-3.9.9
+export PATH=\$MAVEN_HOME/bin:\$PATH" >> ~/.zprofile
+
+source ~/.zprofile
 ```
 To ensure everything is installed
 ```
@@ -62,7 +66,7 @@ To run the application run the following command
 java -jar target/spring-petclinic-3.4.0-SNAPSHOT.jar
 ```
 <br/>
-Now to see the reusult go to ``http://localhost:8080``
+Now to see the reusult go to http://localhost:8080 
 <br/>
 
 5. Increase project Major version (e.g. from 3.2.0 to 4.0.0) without interactive mode. Use release plugin.
@@ -71,6 +75,7 @@ To do this I have read this documentation https://maven.apache.org/maven-release
 
 <br/>
 At first we need to add Release Plugin to our pom.xml file
+
 ```
 <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -82,9 +87,11 @@ At first we need to add Release Plugin to our pom.xml file
 ![screenshot](../screenshots/maven_task/4.png)
 
 First command to execute to prevent the Release Plugin from prompting the user for any information
+
 ```
 mvn -B release:prepare
 ```
+
 We are receiving this error
 ![screenshot](../screenshots/maven_task/2.png)
 <br/>
@@ -145,9 +152,9 @@ For this step I have added some configurations in pom.xml file
 
 ```
 <scm>
-    <connection>scm:git:https://github.com/avmang/spring-petclinic.git</connection>
-    <developerConnection>scm:git:https://github.com/avmang/spring-petclinic.git</developerConnection>
-    <url>https://github.com/avmang/spring-petclinic</url>
+    <connection>scm:git:https://github.com/<username>/spring-petclinic.git</connection>
+    <developerConnection>scm:git:https://github.com/<username>/spring-petclinic.git</developerConnection>
+    <url>https://github.com/<username>/spring-petclinic</url>
   </scm>
 ```
 And changed release plugin part
@@ -158,7 +165,6 @@ And changed release plugin part
         <version>3.1.1</version>
         <configuration>
           <releaseProfiles>release</releaseProfiles>
-          <scmUrl>scm:git:https://github.com/avmang/spring-petclinic.git</scmUrl>
           <goals>install</goals>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <checkModificationExcludes>

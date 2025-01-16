@@ -34,8 +34,9 @@
 <br/>
 
 2. Configure admin user.<br/>
-    Click on Sign In button.
-![Screenshot](../screenshots/nexus-task/1.png)
+    Click on Sign In button.<br/>
+    ![Screenshot](../screenshots/nexus-task/1.png)
+    <br/>
     Here we can sign in as admin. The username is admin and we can get the password with this command. (From Nexus directory)
 
     ```

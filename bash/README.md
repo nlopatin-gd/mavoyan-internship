@@ -13,6 +13,7 @@ Link to script -> [Fibonacci Script](https://github.com/nlopatin-gd/mavoyan-inte
 After executing script you should provide number then get answer.
 
 Result:
+
 ![Screenshot](../screenshots/bash-task/1.png)
 
 ## 2. Opnum
@@ -29,6 +30,7 @@ For debug mode
 ```
 
 Result:
+
 ![Screenshot](../screenshots/bash-task/5.png)
 
 ## 3. Fizzbuzz
@@ -38,6 +40,7 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ./3_fizzbuzz.sh
 ```
 Result:
+
 ![Screenshot](../screenshots/bash-task/2.png)
 ![Screenshot](../screenshots/bash-task/3.png)
 
@@ -47,8 +50,10 @@ Result:
 Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/4_cesar.sh)
 ```
 ./4_cesar.sh -s "shift" -i "input_file" -o "output_file"
+./4_cesar.sh -s "shift" -i a.txt -o b.txt
 ```
 Result:
+
 ![Screenshot](../screenshots/bash-task/4.png)
 
 ## 5. Getopts
@@ -56,20 +61,24 @@ Result:
 Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/5_getopts.sh)
 ```
 ./5_getopts.sh -i "input_file" -o "output_file" -v
+./5_getopts.sh -i a.txt -o b.txt -v
 ```
 ```
 ./5_getopts.sh -i "input_file" -o "output_file" -s "word1" "word2"
+./5_getopts.sh -i a.txt -o b.txt -s "word1" "word2"
 ```
 ```
 ./5_getopts.sh -i "input_file" -o "output_file" -l
+./5_getopts.sh -i a.txx -o b.txt -l
 ```
 ```
-./5_getopts.sh -i "input_file" -o "output_file" -r
+./5_getopts.sh -i a.txt -o b.txt -r
 ```
 ```
-./5_getopts.sh -i "input_file" -o "output_file" -u
+./5_getopts.sh -i a.txt -o b.txt -u
 ```
 Result:
+
 ![Screenshot](../screenshots/bash-task/6.png)
 ![Screenshot](../screenshots/bash-task/7.png)
 
@@ -82,6 +91,7 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ./6_report.sh
 ```
 Result:
+
 ![Screenshot](../screenshots/bash-task/8.png)
 
 

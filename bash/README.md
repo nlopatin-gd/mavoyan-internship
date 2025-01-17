@@ -5,45 +5,24 @@ To make all files executable
 find . -type f -name "*.sh" -exec chmod +x {} \;
 ```
 ## 1. Fibonacci
-
+![Screenshot](../screenshots/bash-task/task1.png)
+Link to script -> [Fibonacci Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
 ```
-./fibonacci.sh
+./1_fibonacci.sh
 ```
 After executing script you should provide number then get answer.
-## 2. Fizzbuzz
-```
-./fizzbuzz.sh
-```
-## 3. Cesar
-```
-./cesar.sh -s "shift" -i "input_file" -o "output_file"
-```
-## 4. Getopts
-```
-./getopts.sh -i "input_file" -o "output_file" -v
-```
-```
-./getopts.sh -i "input_file" -o "output_file" -s "word1" "word2"
-```
-```
-./getopts.sh -i "input_file" -o "output_file" -l
-```
-```
-./getopts.sh -i "input_file" -o "output_file" -r
-```
-```
-./getopts.sh -i "input_file" -o "output_file" -u
-```
 
-## 5. Opnum
+## 2. Opnum
+![Screenshot](../screenshots/bash-task/task2.png)
+Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/2_opnum.sh)
 ```
-./opnum.sh -o "+" -n 1 2 3 4 5 
+./2_opnum.sh -o "+" -n 1 2 3 4 5 
 ```
 Change numbers and operation as you want.
 <br/>
 For debug mode
 ```
-./opnum.sh -o "+" -n 1 2 3 4 5 -d
+./2_opnum.sh -o "+" -n 1 2 3 4 5 -d
 ```
 ## 6. Report
 
@@ -51,13 +30,52 @@ For debug mode
 ./report.sh
 ```
 
+## 3. Fizzbuzz
+![Screenshot](../screenshots/bash-task/task3.png)
+Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/3_fizzbuzz.sh)
+```
+./3_fizzbuzz.sh
+```
+## 4. Cesar
+![Screenshot](../screenshots/bash-task/task4.png)
+Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/4_cesar.sh)
+```
+./4_cesar.sh -s "shift" -i "input_file" -o "output_file"
+```
+## 5. Getopts
+![Screenshot](../screenshots/bash-task/task5.png)
+Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/5_getopts.sh)
+```
+./5_getopts.sh -i "input_file" -o "output_file" -v
+```
+```
+./5_getopts.sh -i "input_file" -o "output_file" -s "word1" "word2"
+```
+```
+./5_getopts.sh -i "input_file" -o "output_file" -l
+```
+```
+./5_getopts.sh -i "input_file" -o "output_file" -r
+```
+```
+./5_getopts.sh -i "input_file" -o "output_file" -u
+```
+
+## 6. Report
+![Screenshot](../screenshots/bash-task/task6.png)
+Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/6_report.sh)
+```
+./6_report.sh
+```
+
+
 # Screenshots
 
 ![screenshot](../screenshots/bash-task/1.png)
+![screenshot](../screenshots/bash-task/5.png)
 ![screenshot](../screenshots/bash-task/2.png)
 ![screenshot](../screenshots/bash-task/3.png)
 ![screenshot](../screenshots/bash-task/4.png)
-![screenshot](../screenshots/bash-task/5.png)
 ![screenshot](../screenshots/bash-task/6.png)
 ![screenshot](../screenshots/bash-task/7.png)
 ![screenshot](../screenshots/bash-task/8.png)

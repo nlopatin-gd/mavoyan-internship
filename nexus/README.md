@@ -123,7 +123,7 @@
     ```
     <repository>
       <id>maven-group</id>
-      <url>http://your-host:8081/repository/maven-group/</url>
+      <url>http://localhost:8081/repository/maven-group/</url>
     </repository>
     ```
 

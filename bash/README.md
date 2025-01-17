@@ -24,11 +24,6 @@ For debug mode
 ```
 ./2_opnum.sh -o "+" -n 1 2 3 4 5 -d
 ```
-## 6. Report
-
-```
-./report.sh
-```
 
 ## 3. Fizzbuzz
 ![Screenshot](../screenshots/bash-task/task3.png)

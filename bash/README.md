@@ -14,9 +14,13 @@ After executing script you should provide number then get answer.
 
 Result:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 3e55ec6 (fixed screenshots and .gitignore file)
+=======
+
+>>>>>>> 63cf57a (added more commands)
 ![Screenshot](../screenshots/bash-task/1.png)
 
 ## 2. Opnum
@@ -33,6 +37,7 @@ For debug mode
 ```
 
 Result:
+
 ![Screenshot](../screenshots/bash-task/5.png)
 
 ## 3. Fizzbuzz
@@ -43,9 +48,13 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ```
 Result:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 3e55ec6 (fixed screenshots and .gitignore file)
+=======
+
+>>>>>>> 63cf57a (added more commands)
 ![Screenshot](../screenshots/bash-task/2.png)
 ![Screenshot](../screenshots/bash-task/3.png)
 
@@ -58,10 +67,6 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ./4_cesar.sh -s "shift" -i a.txt -o b.txt
 ```
 Result:
-<<<<<<< HEAD
-
-=======
->>>>>>> 3e55ec6 (fixed screenshots and .gitignore file)
 ![Screenshot](../screenshots/bash-task/4.png)
 
 ## 5. Getopts
@@ -87,9 +92,13 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ```
 Result:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 3e55ec6 (fixed screenshots and .gitignore file)
+=======
+
+>>>>>>> 63cf57a (added more commands)
 ![Screenshot](../screenshots/bash-task/6.png)
 ![Screenshot](../screenshots/bash-task/7.png)
 
@@ -103,9 +112,13 @@ Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/bl
 ```
 Result:
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 3e55ec6 (fixed screenshots and .gitignore file)
+=======
+
+>>>>>>> 63cf57a (added more commands)
 ![Screenshot](../screenshots/bash-task/8.png)
 
 

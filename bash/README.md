@@ -12,10 +12,13 @@ Link to script -> [Fibonacci Script](https://github.com/nlopatin-gd/mavoyan-inte
 ```
 After executing script you should provide number then get answer.
 
+<<<<<<< HEAD
 Result:
 
 ![Screenshot](../screenshots/bash-task/1.png)
 
+=======
+>>>>>>> 3023404 (Fixed README)
 ## 2. Opnum
 ![Screenshot](../screenshots/bash-task/task2.png)
 Link to script -> [ Script](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/2_opnum.sh)

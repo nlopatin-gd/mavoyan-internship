@@ -2,8 +2,8 @@
 
 ## Description
 
-![Screenshot](../../screenshots/bash-task/db1.png)
-![Screenshot](../../screenshots/bash-task/db2.png)
+![Screenshot](../screenshots/bash-task/db1.png)
+![Screenshot](../screenshots/bash-task/db2.png)
 
 To create database
 

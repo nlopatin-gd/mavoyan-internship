@@ -30,6 +30,7 @@ Install Java and extract maven
 tar -xzvf apache-maven-3.9.9-bin.tar.gz
 ```
 Add maven to path with the following code in home directory.
+(change path to your maven)
 ```
 sudo mv apache-maven-3.9.9 /usr/local
 
@@ -68,7 +69,7 @@ java -jar target/spring-petclinic-3.4.0-SNAPSHOT.jar
 <br/>
 Now to see the reusult go to http://localhost:8080 
 <br/>
-
+<br/>
 5. Increase project Major version (e.g. from 3.2.0 to 4.0.0) without interactive mode. Use release plugin.
 <br/>
 To do this I have read this documentation https://maven.apache.org/maven-release/maven-release-plugin/usage/non-interactive-release.html
@@ -95,7 +96,7 @@ mvn -B release:prepare
 We are receiving this error
 ![screenshot](../screenshots/maven_task/2.png)
 <br/>
-To fix this we should add scm configuration to our pom.xml file
+To fix this we should add scm configuration to our pom.xml file(change ``<username>``)
 ```
 <scm>
     <developerConnection>scm:git:git@github.com:<username>/spring-petclinic.git</developerConnection>
@@ -150,7 +151,7 @@ Result:
 8.Try to perform the release of artifacts.
 
 For this step I have added some configurations in pom.xml file
-
+(change ``<username>``)
 ```
 <scm>
     <connection>scm:git:https://github.com/<username>/spring-petclinic.git</connection>
@@ -190,6 +191,7 @@ The result:
 
 ![screenshot](../screenshots/maven_task/10.png)
 
+<br/>
 9. Perform release cleanup.
 <br/>
 To do this I used this command
@@ -197,6 +199,7 @@ To do this I used this command
 ```
 mvn release:clean
 ```
+
 
 
 

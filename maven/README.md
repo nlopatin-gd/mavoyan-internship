@@ -47,7 +47,7 @@ mvn -v
 <br/>
 ​2. ​Go to https://github.com/spring-projects/spring-petclinic, fork it and clone the forked repo. <br/>
 
-Fork repo and clone that
+Fork repo and clone that (change ``username``)
 ```
 git clone git@github.com:<username>/spring-petclinic.git
 ```
@@ -71,6 +71,7 @@ Now to see the reusult go to http://localhost:8080
 <br/>
 <br/>
 5. Increase project Major version (e.g. from 3.2.0 to 4.0.0) without interactive mode. Use release plugin.
+
 <br/>
 To do this I have read this documentation https://maven.apache.org/maven-release/maven-release-plugin/usage/non-interactive-release.html
 

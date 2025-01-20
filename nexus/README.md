@@ -16,14 +16,14 @@
     To download Nexus and extract
 
     ```
-    curl -L -o nexus.tar.gz https://download.sonatype.com/nexus/3/nexus-3.42.0-01-unix.tar.gz
-    tar -xzvf nexus-3.76.0-03-java17-mac.tgz
+    curl -L -o nexus.tar.gz https://sonatype-download.global.ssl.fastly.net/repository/downloads-prod-group/3/nexus-3.76.0-03-java17-mac.tgz
+    tar -xzvf nexus.tar.gz
     ```
     
     Move to bin directory
 
     ```
-    cd nexus-3.76.0-03/bin/
+    cd nexus-3.76.0-03/bin 
     ```
     Run Nexus
     ```
@@ -49,40 +49,13 @@
     https://www.sonatype.com/blog/using-sonatype-nexus-repository-3-part-1-maven-artifacts
     <br/>
 
-    In Nexus we need to create some blob stores and repositories.<br/>
-    I have created three blob stores
-    ![Screenshot](../screenshots/nexus-task/2.png)
-    Then we need to add repositories<br/>
-    First one
-    ![Screenshot](../screenshots/nexus-task/3.png)
-    ![Screenshot](../screenshots/nexus-task/4.png)
-    Second
-    ![Screenshot](../screenshots/nexus-task/5.png)
-    ![Screenshot](../screenshots/nexus-task/6.png)
-    And third 
-    ![Screenshot](../screenshots/nexus-task/7.png)
-    ![Screenshot](../screenshots/nexus-task/8.png)
-    The group repository with it's blob store.
-    ![Screenshot](../screenshots/nexus-task/9.png)
-    ![Screenshot](../screenshots/nexus-task/10.png)
+    We can use default repositories in Nexus
+    ![Screenshot](../screenshots/nexus-task/default.png)
 
     We need to add some configurations to ~/.m2/settings.xml file.<br/>
-    But before that we can configure ~/.m2/settings-security.xml file for making safe our passwords.<br/>
-    Following this Documentation https://maven.apache.org/guides/mini/guide-encryption.html <br/><br/>
-    Master-password
-    ```
-    mvn --encrypt-master-password <password>
-    ```
-    ```
-    echo "<settingsSecurity>
-    <master>{change_this_to_master_password}</master>
-        </settingsSecurity>" > ~/.m2/settings-security.xml
-    ```
-    Password
-    ```
-    mvn --encrypt-password <password>
-    ```
+
     Configurations of ~/.m2/settings.xml <br/>
+
     Best practice to use separate user for this
     ```
         <?xml version="1.0" encoding="UTF-8"?>
@@ -92,14 +65,14 @@
 
     <servers>
         <server>
-        <id>nexus-snapshot</id>
+        <id>nexus-snapshots</id>
         <username>admin</username>
-        <password>change_to_password</password>
+        <password>change_this</password>
         </server>
         <server>
-        <id>nexus-release</id>
+        <id>nexus-releases</id>
         <username>admin</username>
-        <password>change_to_password</password>
+        <password>change_this</password>
         </server>
     </servers>
 
@@ -119,31 +92,42 @@
     a)For Maven: Use the deploy plugin in your pom.xml. You should be able to upload your artifacts to Nexus using Maven.<br/>
 
     For this step we need to add this to our project's pom.xml file
-    In repositories
-    ```
-    <repository>
-      <id>maven-group</id>
-      <url>http://localhost:8081/repository/maven-group/</url>
-    </repository>
-    ```
 
     ```
     <distributionManagement>
-        <snapshotRepository>
+      <snapshotRepository>
         <id>nexus-snapshots</id>
         <url>http://localhost:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-        <repository>
+      </snapshotRepository>
+      <repository>
         <id>nexus-releases</id>
         <url>http://localhost:8081/repository/maven-releases/</url>
-        </repository>
+      </repository>
     </distributionManagement>
     ```
-
+    And this in plugins section
+    ```
+    <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.1</version> <!-- You can use a newer version if needed -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>deploy</goal> <!-- Deploy goal is used for deployment -->
+                        </goals>
+                        <configuration>
+                            <!-- Customize the deployment process if needed -->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+      <plugin>
+    ```
     The last step 
     ```
     mvn install
-    mvn deploy
+    mvn deploy -Dmaven.test.skip=true
     ```
 
 5. Search artifacts in Nexus

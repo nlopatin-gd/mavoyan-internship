@@ -16,7 +16,7 @@
     To download Nexus and extract
 
     ```
-    curl -O https://download.sonatype.com/nexus/3/nexus-3.76.0-03-java17-mac.tgz
+    curl -L -o nexus.tar.gz https://download.sonatype.com/nexus/3/nexus-3.42.0-01-unix.tar.gz
     tar -xzvf nexus-3.76.0-03-java17-mac.tgz
     ```
     

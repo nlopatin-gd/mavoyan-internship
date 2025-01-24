@@ -49,7 +49,7 @@ CMD ["java", "-jar", "/build/app.jar"]
 Now for making image from this Dockerfile we should use this command
 
 ```
-docker buildx build --platform linux/amd64 -t spring-app1 .
+docker build --platform linux/amd64 -t spring-app1 .
 ```
 Lets fix the size of the image
 ![screenshot](../screenshots/docker_tasks/image1.png)
@@ -155,3 +155,64 @@ Result:
 ![screenshot](../screenshots/docker_tasks/dcresult.png)
 ![screenshot](../screenshots/docker_tasks/pg.png)
 ![screenshot](../screenshots/docker_tasks/dcresult2.png)
+
+To see that in browser visit http://localhost:8080/
+
+## Task 2
+
+![screenshot](../screenshots/docker_tasks/task2.png)
+Links:
+https://griddynamics.atlassian.net/wiki/spaces/GDIP/pages/1145472210/FAQ+for+interns
+https://griddynamics.atlassian.net/wiki/spaces/IT/pages/172998/GD+AWS+cloud+for+beginners
+https://griddynamics.atlassian.net/wiki/spaces/IT/pages/873627729/Tagging+policy+for+Grid+Dynamics+AWS+accounts
+https://www.sonatype.com/blog/using-nexus-3-as-your-repository-part-3-docker-images
+(not working)
+https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
+https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
+
+### Steps
+
+Create and configure docker repository in Nexus<br/>
+-> At first we need to start the Nexus on our local machine
+Go to your directory where the Nexus is
+```
+cd nexus-3.76.0-03/bin
+./nexus run
+```
+Sign in
+Create hosted repository for Docker images
+![screenshot](../screenshots/docker_tasks/dockerrepo1.png)
+![screenshot](../screenshots/docker_tasks/dockerrepo2.png)
+
+Add configurations for docker
+```
+echo '{
+  "insecure-registries": [
+    "localhost:8082",
+    "localhost:8083",
+    "localhost:8081"
+  ]
+}' >> ~/.docker/daemon.json
+```
+<br/> Restart docker<br/>
+Login with docker<br/>
+I'm closing docker in this step, and starting after loging in to avoid this error
+![screenshot](../screenshots/docker_tasks/error1.png)
+
+```
+docker login localhost:8083
+```
+![screenshot](../screenshots/docker_tasks/logedin.png)
+Tag image (in all possible ways)
+```
+docker tag spring-app1:latest localhost:8083/spring-app1:latest
+docker tag spring-app1:latest localhost:8083/repository/docker-images/spring-app1:latest
+```
+Push images
+```
+docker push localhost:8083/spring-app1
+docker push localhost:8083/repository/docker-images/spring-app1:latest
+```
+the result 
+![screenshot](../screenshots/docker_tasks/error2.png)
+

@@ -49,7 +49,8 @@ CMD ["java", "-jar", "/build/app.jar"]
 Now for making image from this Dockerfile we should use this command
 
 ```
-docker build --platform linux/amd64 -t spring-app1 .
+docker build --platform linux/amd64 -t spring-app1 . #for MacOs
+docker build  -t spring-app1 . #for Linux
 ```
 Lets fix the size of the image
 ![screenshot](../screenshots/docker_tasks/image1.png)
@@ -171,7 +172,7 @@ https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
 
 ### Steps
-
+I have done all this steps on Linux kernel.
 Create and configure docker repository in Nexus<br/>
 -> At first we need to start the Nexus on our local machine
 Go to your directory where the Nexus is
@@ -179,40 +180,80 @@ Go to your directory where the Nexus is
 cd nexus-3.76.0-03/bin
 ./nexus run
 ```
-Sign in
+Sign in<br>
 Create hosted repository for Docker images
 ![screenshot](../screenshots/docker_tasks/dockerrepo1.png)
 ![screenshot](../screenshots/docker_tasks/dockerrepo2.png)
-
-Add configurations for docker
-```
-echo '{
-  "insecure-registries": [
-    "localhost:8082",
-    "localhost:8083",
-    "localhost:8081"
-  ]
-}' >> ~/.docker/daemon.json
-```
-<br/> Restart docker<br/>
-Login with docker<br/>
-I'm closing docker in this step, and starting after loging in to avoid this error
-![screenshot](../screenshots/docker_tasks/error1.png)
-
+Login with docker
 ```
 docker login localhost:8083
 ```
 ![screenshot](../screenshots/docker_tasks/logedin.png)
-Tag image (in all possible ways)
+Tag images
 ```
-docker tag spring-app1:latest localhost:8083/spring-app1:latest
 docker tag spring-app1:latest localhost:8083/repository/docker-images/spring-app1:latest
+docker tag spring-app2:latest localhost:8083/repository/docker-images/spring-app2:latest
 ```
 Push images
 ```
-docker push localhost:8083/spring-app1
 docker push localhost:8083/repository/docker-images/spring-app1:latest
+docker push localhost:8083/repository/docker-images/spring-app2:latest
 ```
 the result 
-![screenshot](../screenshots/docker_tasks/error2.png)
+![screenshot](../screenshots/docker_tasks/tresult1.jpg)
 
+
+### ECR part
+
+
+-- Create and configure repository in ECR <br/>
+-- Upload spring-petclinic image to ECR
+
+At first we need to have AWS CLI on our local machine. We can do this with following commands <br/>
+For MacOs
+```
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg ./AWSCLIV2.pkg -target /
+```
+For Linux 
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+Verify that
+```
+which aws
+aws --version
+```
+Then we must configure awscli with this command and IAM credentials
+```
+aws configure
+```
+We need to create ECR repository on AWS
+```
+aws ecr create-repository --repository-name springapp --image-scanning-configuration scanOnPush=true
+```
+![screenshot](../screenshots/docker_tasks/rcresult.jpg)
+Login with your repository URI
+```
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your_repo_URI>/springapp
+```
+Tag the docker images
+```
+docker tag spring-app1:latest <your_repo_URI>/springapp:img1
+docker tag spring-app2:latest <your_repo_URI>/springapp:img2
+```
+And push that to the ECR repository
+```
+docker push <your_repo_URI>/springapp:img1
+docker push <your_repo_URI>/springapp:img2
+```
+Result
+![screenshot](../screenshots/docker_tasks/tresult2.jpg)
+Scans:
+![screenshot](../screenshots/docker_tasks/scan1.jpg)
+![screenshot](../screenshots/docker_tasks/scan2.jpg)
+Scan results are completed successfully.

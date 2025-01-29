@@ -172,9 +172,9 @@ https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
 https://docs.aws.amazon.com/AmazonECR/latest/userguide/getting-started-cli.html
 
 ### Steps
-I have done all this steps on Linux kernel.
+I have done all this steps on Linux kernel.<br/>
 Create and configure docker repository in Nexus<br/>
--> At first we need to start the Nexus on our local machine
+-> At first we need to start the Nexus on our local machine. <br/>
 Go to your directory where the Nexus is
 ```
 cd nexus-3.76.0-03/bin

@@ -85,7 +85,7 @@ FROM eclipse-temurin:17-jdk AS runtime
 
 WORKDIR /build
 
-COPY /target/spring-petclinic-*.jar app.jar
+COPY --from=build /target/spring-petclinic-*.jar app.jar
 
 EXPOSE 8080
 

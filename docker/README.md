@@ -83,9 +83,9 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk AS runtime
 
-WORKDIR /app
+WORKDIR /build
 
-COPY --from=build /build/target/spring-petclinic-*.jar /app/app.jar
+COPY /target/spring-petclinic-*.jar /build/app.jar
 
 EXPOSE 8080
 

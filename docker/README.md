@@ -39,11 +39,11 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /build
 
-COPY target/spring-petclinic-*.jar /build/app.jar
+COPY target/spring-petclinic-*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/build/app.jar"]
+CMD ["java", "-jar", "app.jar"]
 ```
 
 Now for making image from this Dockerfile we should use this command
@@ -85,11 +85,11 @@ FROM eclipse-temurin:17-jdk AS runtime
 
 WORKDIR /build
 
-COPY /target/spring-petclinic-*.jar /build/app.jar
+COPY /target/spring-petclinic-*.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "/app/app.jar"]
+CMD ["java", "-jar", "app.jar"]
 ```
 
 Build command:

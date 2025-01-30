@@ -39,7 +39,7 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /build
 
-COPY target/spring-petclinic-4.0.1-SNAPSHOT.jar /build/app.jar
+COPY target/spring-petclinic-*.jar /build/app.jar
 
 EXPOSE 8080
 
@@ -76,13 +76,10 @@ WORKDIR /build
 
 RUN apt-get update && apt-get install -y maven
 
-COPY mvnw mvnw
-COPY mvnw.cmd .
-COPY .mvn .mvn
 COPY pom.xml .
 COPY src ./src
 
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jdk AS runtime
 

@@ -314,6 +314,11 @@ git push
 Go to Jenkins, choose ``petclinic-app`` and click on ``Build Now``
 
 Wait until the process completes successfully.
-Results:
+Results: (for Docker Hub)
 ![screenshot](../screenshots/jenkins-task/res1.png)
 ![screenshot](../screenshots/jenkins-task/res2.png)
+
+Results: (for Nexus)
+![screenshot](../screenshots/jenkins-task/n1.jpg)
+![screenshot](../screenshots/jenkins-task/n2.jpg)
+![screenshot](../screenshots/jenkins-task/n3.jpg)

@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -y maven
 COPY pom.xml .
 COPY src ./src
 
-RUN mvn clean package -DskipTests
+RUN mvn clean install -DskipTests
 
 FROM eclipse-temurin:17-jdk AS runtime
 
@@ -313,7 +313,7 @@ git push
 
 Go to Jenkins, choose ``petclinic-app`` and click on ``Build Now``
 
-Wait until the process completes successfully.
+Wait until the process completes successfully.<br/>
 Results: (for Docker Hub)
 ![screenshot](../screenshots/jenkins-task/res1.png)
 ![screenshot](../screenshots/jenkins-task/res2.png)

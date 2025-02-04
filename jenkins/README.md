@@ -56,7 +56,7 @@ EXPOSE 8080
 
 CMD ["java", "-jar", "app.jar"]
 ```
-
+For Nexus<br/>
 Run Nexus (If you want to use Docker Hub find configurations below)
 
 ```
@@ -67,16 +67,21 @@ Login to Nexus, go to ``Repository->Repositories`` and add 2 hosted docker repos
 ![screenshot](../screenshots/jenkins-task/mr.png)
 ![screenshot](../screenshots/jenkins-task/main.png)
 
+For Docker Hub<br/>
+Sign in to Docker Hub and create 2 repositories
+``Repository`` -> ``Create Repository``<br/>
+Give the same names: main and mr
+![screenshot](../screenshots/jenkins-task/dh_repos.png)
 In Jenkins: <br/> 
 Click on ``New Item``<br/>
-Name the project ``petclinic-app``<br/>
-Choose Pipeline
-In definition part choose Pipeline script from SCM<br/>
-Choose git as SCM<br/>
-In Repository Url field fill your repository link: https://github.com/<your_username>/spring-petclinic.git <br/>
-Chnage ``Branch Specifier`` to */main
+Name the project ``petclinic``<br/>
+Choose Multibranch Pipeline
+Choose git as source<br/>
+In Project Repository field fill your repository link: https://github.com/<your_username>/spring-petclinic.git <br/>
+Set interval to 1 day(or whatever you want)
+![screenshot](../screenshots/jenkins-task/interval.png)
 
-Add a Jenkinsfile with the following content: (For Nexus)
+Add a Jenkinsfile with the following content: (For Nexus, you can see Docker Hub version below)
 
 ```
 pipeline {
@@ -91,7 +96,9 @@ pipeline {
     stages {
         stage ('Checkout') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 checkout scm
@@ -100,7 +107,9 @@ pipeline {
 
         stage ('Checkstyle') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -116,7 +125,9 @@ pipeline {
 
         stage ('Test') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -127,7 +138,9 @@ pipeline {
 
         stage ('Build') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -138,7 +151,9 @@ pipeline {
 
         stage ('Docker Image for MR') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -189,7 +204,7 @@ pipeline {
 In Jenkins add credentials with this steps <br/>
 Manage Jenkins -> Credentials -> System -> Global credentials (unrestricted) -> Add credentials <br/>
 Kind -> Username with password <br/>
-Add your Nexus username and password, click treat username as secret.<br/>
+Add your Docker Hub(Nexus) username and password, click treat username as secret.<br/>
 (If you are using Docker Hub generate token and past that as a password)<br/>
 Write ``docker-credentials`` as ID
 ![screenshot](../screenshots/jenkins-task/credentials.png)
@@ -202,22 +217,27 @@ pipeline {
 
     environment {
         REPO_MAIN = "main"
+        REPO_MR = "mr"
         IMAGE_NAME = "spring-petclinic"
     }
 
     stages {
-        stage ('Checkout') {
+        stage('Checkout') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 checkout scm
             }
         }
 
-        stage ('Checkstyle') {
+        stage('Checkstyle') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -231,9 +251,11 @@ pipeline {
             }
         }
 
-        stage ('Test') {
+        stage('Test') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -242,9 +264,11 @@ pipeline {
             }
         }
 
-        stage ('Build') {
+        stage('Build') {
             when {
-                expression { env.CHANGE_ID != null }
+                expression {
+                    return env.BRANCH_NAME?.startsWith('other-')
+                }
             }
             steps {
                 script {
@@ -253,33 +277,10 @@ pipeline {
             }
         }
 
-        stage ('Docker Image for MR') {
-            when {
-                expression { env.CHANGE_ID != null }
-            }
-            steps {
-                script {
-                    def shortCommit = env.GIT_COMMIT.substring(0, 7)
-                    withCredentials([usernamePassword(
-                        credentialsId: 'docker-credentials',
-                        usernameVariable: 'DOCKER_CREDS_USR',
-                        passwordVariable: 'DOCKER_CREDS_PSW'
-                    )]) {
-                        sh """
-                        echo "${DOCKER_CREDS_PSW}" | docker login -u "${DOCKER_CREDS_USR}" --password-stdin
-                        docker build -t ${IMAGE_NAME}:${shortCommit} .
-                        docker tag ${IMAGE_NAME}:${shortCommit} ${DOCKER_HUB_USR}/mr:${shortCommit}
-                        docker push ${DOCKER_HUB_USR}/mr:${shortCommit}
-                        """
-                    }
-                }
-            }
-        }
-
-        stage ('Docker Image for main branch') {
+        stage('Docker Image for MR') {
             when {
                 expression {
-                    env.BRANCH_NAME == 'main' || env.GIT_BRANCH?.contains('main')
+                    return env.BRANCH_NAME?.startsWith('other-')
                 }
             }
             steps {
@@ -293,8 +294,33 @@ pipeline {
                         sh """
                         echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USR}" --password-stdin
                         docker build -t ${IMAGE_NAME}:${shortCommit} .
-                        docker tag ${IMAGE_NAME}:${shortCommit} ${DOCKER_HUB_USR}/main:${shortCommit}
-                        docker push ${DOCKER_HUB_USR}/main:${shortCommit}
+                        docker tag ${IMAGE_NAME}:${shortCommit} ${DOCKER_HUB_USR}/${REPO_MR}:${shortCommit}
+                        docker push ${DOCKER_HUB_USR}/${REPO_MR}:${shortCommit}
+                        """
+                    }
+                }
+            }
+        }
+
+        stage('Docker Image for main branch') {
+            when {
+                expression {
+                    return env.BRANCH_NAME == 'main' || env.BRANCH_NAME?.contains('main')
+                }
+            }
+            steps {
+                script {
+                    def shortCommit = env.GIT_COMMIT.substring(0, 7)
+                    withCredentials([usernamePassword(
+                        credentialsId: 'docker-credentials',
+                        usernameVariable: 'DOCKER_HUB_USR',
+                        passwordVariable: 'DOCKER_HUB_TOKEN'
+                    )]) {
+                        sh """
+                        echo "${DOCKER_HUB_TOKEN}" | docker login -u "${DOCKER_HUB_USR}" --password-stdin
+                        docker build -t ${IMAGE_NAME}:${shortCommit} .
+                        docker tag ${IMAGE_NAME}:${shortCommit} ${DOCKER_HUB_USR}/${REPO_MAIN}:${shortCommit}
+                        docker push ${DOCKER_HUB_USR}/${REPO_MAIN}:${shortCommit}
                         """
                     }
                 }
@@ -311,13 +337,30 @@ git commit -m "added Jenkinsfile"
 git push 
 ```
 
-Go to Jenkins, choose ``petclinic-app`` and click on ``Build Now``
+Go to Jenkins, choose ``petclinic`` and click on ``Scan Multibranch Pipeline Now``
 
 Wait until the process completes successfully.<br/>
 Results: (for Docker Hub)
 ![screenshot](../screenshots/jenkins-task/res1.png)
 ![screenshot](../screenshots/jenkins-task/res2.png)
 
+To test other stages lets create new branch and do some commit
+```
+git checkout -b other-branch1
+touch a.txt
+git add a.txt 
+git commit -m "test commit"
+git push --set-upstream origin other-branch1
+```
+And again<br/>
+
+Go to Jenkins, choose ``petclinic`` and click on ``Scan Multibranch Pipeline Now``
+
+Results:
+![screenshot](../screenshots/jenkins-task/r1.png)
+![screenshot](../screenshots/jenkins-task/r2.png)
+![screenshot](../screenshots/jenkins-task/r3.png)
+![screenshot](../screenshots/jenkins-task/r4.png)
 Results: (for Nexus)
 ![screenshot](../screenshots/jenkins-task/n1.jpg)
 ![screenshot](../screenshots/jenkins-task/n2.jpg)

@@ -8,7 +8,7 @@ ZONE='us-east1-b'
 VM_NAME='mavoyan-vm'
 VPC_NAME='mavoyan-vpc'
 SUBNET_NAME='mavoyan-subnet'
-FIREWALL_RULE_NAME='mavoyan-allow-http-ssh'
+FIREWALL_RULE_NAME='mavoyan-allow-8080-ssh'
 IP_NAME='mavoyan-ipforvm'
 
 

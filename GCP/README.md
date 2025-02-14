@@ -21,10 +21,10 @@ Create 4 bash files with following command.
 touch create_resources.sh create_gar.sh run_container.sh remove.sh
 ```
 Get the content of scripts from this links:
-create_resources.sh -> 
-create_gar.sh -> 
-run_container.sh -> 
-remove.sh -> 
+create_resources.sh -> [create_resources](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
+create_gar.sh -> [create_gar](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
+run_container.sh -> [run_container](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
+remove.sh -> [remove](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
 
 Run scripts with this command in Google Cloud Shell
 ```

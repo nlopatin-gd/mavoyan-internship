@@ -26,6 +26,10 @@ create_gar.sh -> [create_gar](https://github.com/nlopatin-gd/mavoyan-internship/
 run_container.sh -> [run_container](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
 remove.sh -> [remove](https://github.com/nlopatin-gd/mavoyan-internship/blob/bash/bash/1_fibonacci.sh)
 
+Clone repository:
+```
+git clone https://github.com/avmang/spring-petclinic.git
+```
 Run scripts with this command in Google Cloud Shell
 ```
 bash create_resources.sh 

@@ -25,13 +25,13 @@ gcloud compute networks subnets create mavoyan-subnet \
 gcloud services enable artifactregistry.googleapis.com
 
 # Creation firewall rule 
-gcloud compute firewall-rules create mavoyan-allow-http-ssh \
+gcloud compute firewall-rules create mavoyan-allow-8080-ssh \
   --project=$PROJECT_ID \
   --direction=INGRESS \
   --priority=1000 \
   --network=mavoyan-vpc \
   --action=ALLOW \
-  --rules=tcp:22,tcp:80,tcp:8080 \
+  --rules=tcp:22,tcp:8080 \
   --source-ranges=0.0.0.0/0 \
   --target-tags=simpletag
 

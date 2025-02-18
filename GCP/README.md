@@ -62,7 +62,7 @@ Take commands for your script:
 To see the result, find the external IP for your VM.<br>
 You can use this command for finding IP. 
 ```
-cloud compute instances describe mavoyan-vm --zone us-east1-b --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'
+gcloud compute instances describe mavoyan-vm --zone us-east1-b --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'
 ```
 ![Screenshot](../screenshots/gcp-task/externalip.png)
 Open on your browser ``<EXTERNAL_IP>:8080``

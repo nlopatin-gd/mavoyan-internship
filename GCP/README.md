@@ -20,7 +20,7 @@ Create 4 bash files with following command.
 ```
 touch create_resources.sh create_gar.sh run_container.sh remove.sh
 ```
-Get the content of scripts from this links:
+Get the content of scripts from this links(Go to editor with ``Open Editor`` button):
 create_resources.sh -> [create_resources](https://github.com/nlopatin-gd/mavoyan-internship/blob/gcp/GCP/create_resources.sh)
 <br/>
 create_gar.sh -> [create_gar](https://github.com/nlopatin-gd/mavoyan-internship/blob/gcp/GCP/create_gar.sh)
@@ -28,22 +28,24 @@ create_gar.sh -> [create_gar](https://github.com/nlopatin-gd/mavoyan-internship/
 run_container.sh -> [run_container](https://github.com/nlopatin-gd/mavoyan-internship/blob/gcp/GCP/run_container.sh)
 <br/>
 remove.sh -> [remove](https://github.com/nlopatin-gd/mavoyan-internship/blob/gcp/GCP/remove.sh)
-
+<br/>
+Go back to the terminal<br/>
 Clone repository:
 ```
 git clone https://github.com/avmang/spring-petclinic.git
 ```
-Run scripts with this command in Google Cloud Shell
+Run following commands in Google Cloud Shell
 ```
 bash create_resources.sh 
 bash create_gar.sh 
+gcloud compute instances start mavoyan-vm --zone us-east1-b
 bash run_container.sh 
 ```
 NOTE: Rerun scripts in case of failures or use the following script to start VM.
 ```
 gcloud compute instances start mavoyan-vm --zone us-east1-b
 ```
-
+(We are doing this because VM turning off while the build process)
 ### Steps to help you write scripts easier:
 
 Make resources with GCP console like this:
@@ -56,7 +58,11 @@ Take commands for your script:
 ![Screenshot](../screenshots/gcp-task/commands.png)
 
 ## Step 2 (Result)
-To see the result, find the external IP for your VM.
+To see the result, find the external IP for your VM.<br>
+You can use this command for finding IP.
+``
+cloud compute instances describe mavoyan-vm --zone us-east1-b --format 'get(networkInterfaces[0].accessConfigs[0].natIP)'
+``
 ![Screenshot](../screenshots/gcp-task/externalip.png)
 Open on your browser ``<EXTERNAL_IP>:8080``
 ![Screenshot](../screenshots/gcp-task/result.png)

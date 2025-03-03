@@ -1,3 +1,7 @@
 .DS_Store
 b.txt
 db/test_db.txt
+terraform/.terraform
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup

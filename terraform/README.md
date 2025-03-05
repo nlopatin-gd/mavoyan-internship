@@ -63,6 +63,22 @@ To destroy infrastructure
 terraform destroy
 ```
 
+### Updated Task
+
+- Moved necessary components from the network module to the compute network.
+- Made the following attributes configurable via variables:
+  - `distribution_policy_zone`
+  - VM names
+  - Startup scripts
+- This enables parallel infrastructure creation using two separate modules: ``compute1`` and ``compute2``.
+<br/>
+Result:
+![screenshot](../screenshots/terraform-task/s11.png)
+![screenshot](../screenshots/terraform-task/s12.png)
+![screenshot](../screenshots/terraform-task/s21.png)
+![screenshot](../screenshots/terraform-task/s22.png)
+![screenshot](../screenshots/terraform-task/ips.png)
+Note(IP address is different from browsers IPs)
 
 
 

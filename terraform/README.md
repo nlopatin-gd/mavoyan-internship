@@ -73,6 +73,7 @@ terraform destroy
 - This enables parallel infrastructure creation using two separate modules: ``compute1`` and ``compute2``.
 <br/>
 Result:
+
 ![screenshot](../screenshots/terraform-task/s11.png)
 ![screenshot](../screenshots/terraform-task/s12.png)
 ![screenshot](../screenshots/terraform-task/s21.png)

@@ -52,3 +52,13 @@ kubectl get service mavoyan-petclinic
 ![screenshot](../screenshots/k8s/exip.png)
 Result:
 ![screenshot](../screenshots/k8s/result.png)
+
+To delete service:
+```
+kubectl delete service mavoyan-petclinic
+```
+To delete the cluster:
+```
+gcloud container clusters delete mavoyan-petclinic-cluster \
+    --location us-east1
+```

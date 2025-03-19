@@ -64,3 +64,45 @@ kubectl get ingress -n mavoyan-namespace
 ![screenshot](../screenshots/k8s/ingress.png)
 And open in browser
 ![screenshot](../screenshots/k8s/result.png)
+
+### App-DB Connection Test 
+
+
+At first we need to do port-forwarding for db.
+```
+kubectl port-forward service/demo-db 5432:5432 -n mavoyan-namespace
+```
+![screenshot](../screenshots/k8s/pf.png)
+
+Now we can connect to db from our local terminal
+```
+psql -h localhost -p 5432 -U user -d petclinic
+```
+![screenshot](../screenshots/k8s/dbcon.png)
+
+In web app we can find where we can do chagnes in db
+![screenshot](../screenshots/k8s/appd.png)
+Tables in DB
+```
+\dt
+```
+![screenshot](../screenshots/k8s/tables.png)
+Before doing changes lets print the content of owners table.
+```
+TABLE owners;
+```
+![screenshot](../screenshots/k8s/owners.png)
+Now let's do changes with adding owner
+![screenshot](../screenshots/k8s/addowner.png)
+Result:
+![screenshot](../screenshots/k8s/r1.png)
+
+### DB-App Connection Test  
+
+For testing from other side we can remove user with id 11 from db.
+```
+DELETE FROM owners WHERE id=11;
+```
+![screenshot](../screenshots/k8s/dbd.png)
+Result:
+![screenshot](../screenshots/k8s/r2.png)

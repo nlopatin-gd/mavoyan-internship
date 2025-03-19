@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: petclinic
+  annotations: {}
+    #kubernetes.io/ingress.global-static-ip-name: "mavoyan-ingress-webapps"
+  namespace: mavoyan-namespace
+spec:
+  rules:
+  - http:
+      paths:
+      - path: "/*"
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: petclinic
+            port:
+              number: 80

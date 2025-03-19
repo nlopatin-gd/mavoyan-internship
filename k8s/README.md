@@ -16,49 +16,51 @@ Optional:<br/>
 
 ## Steps
 
-Go to the GCP console and open the Cloud Shell
-
-Set the project just in case
+At first we need to create GKE cluster in gcp using terraform
 ```
-gcloud config set project gd-gcp-internship-devops
+Clone this project git clone -b k8s git@github.com:nlopatin-gd/mavoyan-internship.git
 ```
-Create cluster
+Go to desired directory
 ```
-gcloud container clusters create-auto mavoyan-petclinic-cluster \
-    --location=us-east1
+cd k8s cd k8s/terraform/
 ```
-After creating your cluster, you need to get authentication credentials to interact with the cluster:
-
+Apply infrastructure
 ```
-gcloud container clusters get-credentials mavoyan-petclinic-cluster \
+terraform init
+terraform validate
+terraform plan
+terraform apply
+```
+Get credentials in your terminal
+```
+gcloud container clusters get-credentials mavoyan-cluster \
     --location us-east1
 ```
-Create deployment with image on GAR
+Cd to directory with yaml files
 ```
-kubectl create deployment mavoyan-petclinic \
-    --image=us-east1-docker.pkg.dev/gd-gcp-internship-devops/mavoyan-springrepo/spring-app:latest
+cd ..
 ```
-Exose with Load LoadBalancer
+Create namespace for our resources
 ```
-kubectl expose deployment mavoyan-petclinic \
-    --type LoadBalancer \
-    --port 80 \
-    --target-port 8080
+kubectl create namespace mavoyan-namespace
 ```
-Wait till Exteral IP will apear and get it with this command
+Apply yaml files (Note: first one should be secret.yaml)
 ```
-kubectl get service mavoyan-petclinic
+kubectl apply -f secret.yaml
+kubectl apply -f dbdeployment.yaml
+kubectl apply -f dbservice.yaml
+kubectl apply -f appdeployment.yaml
+kubectl apply -f appservice.yaml
+kubectl apply -f appingress.yaml
 ```
-![screenshot](../screenshots/k8s/exip.png)
-Result:
+To see our resources use this command
+```
+kubectl get all -n mavoyan-namespace 
+```
+Then we can get the IP address from here
+```
+kubectl get ingress -n mavoyan-namespace
+```
+![screenshot](../screenshots/k8s/ingress.png)
+And open in browser
 ![screenshot](../screenshots/k8s/result.png)
-
-To delete service:
-```
-kubectl delete service mavoyan-petclinic
-```
-To delete the cluster:
-```
-gcloud container clusters delete mavoyan-petclinic-cluster \
-    --location us-east1
-```

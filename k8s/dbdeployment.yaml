@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-db
+  labels:
+    app: demo-db
+  namespace: mavoyan-namespace
+spec:
+  selector:
+    matchLabels:
+      app: demo-db
+  template:
+    metadata:
+      labels:
+        app: demo-db
+    spec:
+      containers:
+        - image: postgres:17
+          name: postgresql
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: database
+          ports:
+            - containerPort: 5432
+              name: postgresql
+          livenessProbe:
+            tcpSocket:
+              port: postgresql
+          readinessProbe:
+            tcpSocket:
+              port: postgresql
+          startupProbe:
+            tcpSocket:
+              port: postgresql

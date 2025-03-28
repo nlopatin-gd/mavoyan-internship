@@ -1,0 +1,222 @@
+---
+# Source: petclinic/templates/dbservice.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-db
+  labels:
+    # app:  demo-db
+    app: demo-db
+  namespace: mavoyan
+spec:
+  type: ClusterIP #can be rmoved (?)
+  ports:
+    - port: 5432
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+---
+# Source: petclinic/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic
+  labels:
+    helm.sh/chart: petclinic-0.1.0
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  namespace: mavoyan
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+---
+# Source: petclinic/templates/dbdeployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-db
+  labels:
+    helm.sh/chart: petclinic-0.1.0
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  namespace: mavoyan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      # app: "demo-db"
+      app: demo-db
+  template:
+    metadata:
+      labels:
+        #
+        helm.sh/chart: petclinic-0.1.0
+        app.kubernetes.io/name: petclinic
+        app.kubernetes.io/instance: petclinic
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        #
+        #
+        app: petclinic
+        #
+        app: demo-db
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: postgres-user
+          image: postgres:17
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 5432
+              protocol: TCP
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: demo-db
+                  key: database
+          livenessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            tcpSocket:
+              port: 5432
+          readinessProbe:
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            tcpSocket:
+              port: 5432
+          volumeMounts:
+            - mountPath: /bindings/secret
+              name: binding
+              readOnly: true
+      volumes:
+        - name: binding
+          projected:
+            sources:
+            - secret:
+                name: demo-db
+---
+# Source: petclinic/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+  labels:
+    helm.sh/chart: petclinic-0.1.0
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  namespace: mavoyan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: petclinic
+      app.kubernetes.io/instance: petclinic 
+  template:
+    metadata:
+      labels:
+        helm.sh/chart: petclinic-0.1.0
+        app.kubernetes.io/name: petclinic
+        app.kubernetes.io/instance: petclinic
+        app.kubernetes.io/version: "1.16.0"
+        app.kubernetes.io/managed-by: Helm
+        app: petclinic
+    spec:
+      serviceAccountName: default
+      containers:
+        - name: workload
+          image: dsyer/petclinic
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /livez
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+          volumeMounts:
+            - mountPath: /bindings/secret
+              name: binding
+              readOnly: true
+      volumes:
+        - name: binding
+          projected:
+            sources:
+            - secret:
+                name: demo-db
+---
+# Source: petclinic/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: petclinic
+  labels:
+    helm.sh/chart: petclinic-0.1.0
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  namespace: mavoyan
+spec:
+  rules:
+    - host: "chart-example.local"
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: petclinic
+                port:
+                  number: 80
+---
+# Source: petclinic/templates/tests/test-connection.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "petclinic-test-connection"
+  labels:
+    helm.sh/chart: petclinic-0.1.0
+    app.kubernetes.io/name: petclinic
+    app.kubernetes.io/instance: petclinic
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['petclinic:80']
+  restartPolicy: Never

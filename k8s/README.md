@@ -22,7 +22,7 @@ Clone this project git clone -b k8s git@github.com:nlopatin-gd/mavoyan-internshi
 ```
 Go to desired directory
 ```
-cd k8s cd k8s/terraform/
+cd k8s/terraform/
 ```
 Apply infrastructure
 ```

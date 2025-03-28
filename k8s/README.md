@@ -29,13 +29,26 @@ Apply infrastructure
 terraform init
 terraform validate
 terraform plan
+```
+The output of terraform plan 
+![screenshot](../screenshots/k8s/c1.png)
+![screenshot](../screenshots/k8s/c2.png)
+![screenshot](../screenshots/k8s/c3.png)
+![screenshot](../screenshots/k8s/c4.png)
+Then do terrform apply to create the cluster
+```
 terraform apply
 ```
+Output:
+![screenshot](../screenshots/k8s/c5.png)
+The cluster is created. </br>
 Get credentials in your terminal
 ```
 gcloud container clusters get-credentials mavoyan-cluster \
-    --location us-east1
+    --location us-east1 \
+    --project gd-gcp-internship-devops
 ```
+![screenshot](../screenshots/k8s/gc.png)
 Cd to directory with yaml files
 ```
 cd ..
@@ -59,9 +72,9 @@ kubectl get all -n mavoyan-namespace
 ```
 Then we can get the IP address from here
 ```
-kubectl get ingress -n mavoyan-namespace
+kubectl get ingress petclinic -n mavoyan-namespace -o json | jq ".status.loadBalancer.ingress[0].ip"
 ```
-![screenshot](../screenshots/k8s/ingress.png)
+![screenshot](../screenshots/k8s/ip.png)
 And open in browser
 ![screenshot](../screenshots/k8s/result.png)
 

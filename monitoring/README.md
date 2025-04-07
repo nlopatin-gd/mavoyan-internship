@@ -41,6 +41,7 @@ b) ollow along to Explore tab and check out for logs
 Clone git repository for spring petclinic application
 ```
 git clone git@github.com:avmang/spring-petclinic.git
+cd spring-petclinic/ do
 ```
 I have added following files
  - ``config.yml``
@@ -91,7 +92,7 @@ Configurations for prometheus -> https://github.com/avmang/spring-petclinic/blob
 As a target for prometheus we need to set the host like this:
 ```
 - targets:
-      - spr_new-app-1:10254 # <container_name>:<port>
+      - app:10254 # <service_name>:<port>
 ```
 Binding of prometheus.yml file in Docker Compose (line 41)
 ```
@@ -128,7 +129,7 @@ To do this visit to ``localhost:9090``
 Create Prometheus data source in the user interface
 Import dashboard with its id - 10519
 
-To automated grafana we will use terraform<br/>.
+To automated grafana we will use terraform.<br/>
 We will need service account and token for that. To gather that use this requests.
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"name":"terraform", "role": "Admin"}' http://admin:admin@localhost:3000/api/serviceaccounts
@@ -144,24 +145,26 @@ cd terraform
 ```
 terraform file -> https://github.com/avmang/spring-petclinic/blob/main/terraform/grafana.tf
 ```
-cd terraform
 terraform init
 terraform validate
 terraform plan
 terraform apply
 ```
-
+```
+terraform destroy #for destroying
+```
 Manual:<br/>
 Go to ``localhost:3000``<br/>
 Log in with admin:admin <br/>
-Add prometheus datasourse 
+Add prometheus datasourse. <br/>
 ![Screenshot](../screenshots/monitoring/ds.png)
 ![Screenshot](../screenshots/monitoring/pds.png)
-Url must be with prometheus container name. Test and Save.
+Url must be with prometheus service name. Test and Save.
 ![Screenshot](../screenshots/monitoring/tas.png)
 Add Dashboard.
 ![Screenshot](../screenshots/monitoring/db.png)
 ![Screenshot](../screenshots/monitoring/idb.png)
+Write 10519 as ID.
 ![Screenshot](../screenshots/monitoring/dashboard.png)
 Result:
 ![Screenshot](../screenshots/monitoring/res1.png)

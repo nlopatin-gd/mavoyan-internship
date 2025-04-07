@@ -138,17 +138,20 @@ curl -X POST -H "Content-Type: application/json" -d '{"name":"terraform", "role"
 curl -X POST -H "Content-Type: application/json" -d '{"name":"terraform-token"}' http://admin:admin@localhost:3000/api/serviceaccounts/<service account id>/tokens
 ```
 ![Screenshot](../screenshots/monitoring/r2.png)
+Go to terraform directory
+```
+cd terraform
+```
+terraform file -> https://github.com/avmang/spring-petclinic/blob/main/terraform/grafana.tf
 ```
 cd terraform
 terraform init
 terraform validate
-#terraform plan
-#terraform apply
+terraform plan
+terraform apply
 ```
-### Problem part
-![Screenshot](../screenshots/monitoring/problem.png)
 
-Manual:
+Manual:<br/>
 Go to ``localhost:3000``<br/>
 Log in with admin:admin <br/>
 Add prometheus datasourse 
@@ -163,3 +166,46 @@ Add Dashboard.
 Result:
 ![Screenshot](../screenshots/monitoring/res1.png)
 ![Screenshot](../screenshots/monitoring/res2.png)
+
+
+### Logging part
+
+I've added services for promtail and loki in docker-compose file, and changed grafana service to automaticlly add datasource of loki.<br/>
+Docker-compose file -> https://github.com/avmang/spring-petclinic/blob/main/docker-compose.yml
+
+Changed the CMD command in Dockerfile to save logs in app.log file.
+```
+CMD java -javaagent:/opt/jmx_exporter/$JAR=10254:/opt/jmx_exporter/config.yaml -jar app.jar > logs/app.log
+```
+For promtail we need to configure the file from where promtail will read logs and the loki server to send logs.
+```
+__path__: /var/log/app.log
+```
+```
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+```
+Config file for promtail -> https://github.com/avmang/spring-petclinic/blob/main/logging/config.yml
+
+To run all that services we need to run this command
+```
+docker-compose up --build -d
+```
+To see loki is up go to ``localhost:3100/ready``
+![Screenshot](../screenshots/monitoring/lokir.png)
+
+To see promtail navigate to ``localhost:9080/targets``
+![Screenshot](../screenshots/monitoring/promtarget.png)
+
+To see the final result go to grafana ``localhost:3000``
+
+Data soruces -> Loki
+![Screenshot](../screenshots/monitoring/gloki.png)
+Explore data
+![Screenshot](../screenshots/monitoring/exploredata.png)
+Select lables
+![Screenshot](../screenshots/monitoring/labels.png)
+Click on run query button
+![Screenshot](../screenshots/monitoring/runquery.png)
+Result:
+![Screenshot](../screenshots/monitoring/logres.png)

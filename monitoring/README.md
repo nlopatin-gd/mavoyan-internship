@@ -41,7 +41,7 @@ b) ollow along to Explore tab and check out for logs
 Clone git repository for spring petclinic application
 ```
 git clone git@github.com:avmang/spring-petclinic.git
-cd spring-petclinic/ do
+cd spring-petclinic/
 ```
 I have added following files
  - ``config.yml``

@@ -143,13 +143,18 @@ Go to terraform directory
 ```
 cd terraform
 ```
-terraform file -> https://github.com/avmang/spring-petclinic/blob/main/terraform/grafana.tf
+terraform file -> https://github.com/avmang/spring-petclinic/blob/main/terraform/grafana.tf<br/>
+Download Json file for jmx exporter dashboard
+```
+ wget -O jmx_exporter_dashboard.json https://grafana.com/api/dashboards/10519/revisions/2/download
+```
 ```
 terraform init
 terraform validate
 terraform plan
 terraform apply
 ```
+Set generated token as input variable
 ```
 terraform destroy #for destroying
 ```

@@ -1,0 +1,19 @@
+{
+    "Customer Satisfaction Survey": {
+      "Main Page": {
+        "How satisfied are you with our service?": {
+          "Description": "Rate your satisfaction",
+          "Answers": ["Very Satisfied", "Satisfied", "Neutral", "Dissatisfied"]
+        },
+        "Would you recommend us to others?": {
+          "Description": "Recommendation likelihood",
+          "Answers": ["Yes", "No"]
+        },
+        "What can we improve?": {
+          "Description": "Improvement suggestions",
+          "Answers": ["Support", "Pricing", "Speed", "Nothing"]
+        }
+      }
+    }
+  }
+  

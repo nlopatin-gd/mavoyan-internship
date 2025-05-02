@@ -5,3 +5,5 @@ db/test_db.txt
 *.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
+*env
+__pycache__

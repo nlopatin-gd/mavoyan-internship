@@ -1,0 +1,56 @@
+
+---
+
+- name: Deploy Spring Petclinic App
+  hosts: webservers
+  become: yes
+  vars:
+    artifact_version: latest  
+    docker_image: <your_username>/ansible-spring-multiplatform
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600  
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Pull Docker image from Docker Hub
+      community.docker.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+
+    - name: Run Image
+      community.docker.docker_container:
+        name: ansible-spring
+        image: "{{ docker_image }}"
+        state: started
+        published_ports:
+          - "8080:8080"
+
+    - name: Wait for application to start
+      wait_for:
+        host: "{{ hostvars[inventory_hostname]['ansible_host'] }}"
+        port: 8080
+        delay: 10
+        timeout: 60
+
+    - name: Check application status
+      uri:
+        url: "http://{{ hostvars[inventory_hostname]['ansible_host'] }}:8080/"
+        return_content: yes
+      register: result
+
+    - name: Print application response
+      debug:
+        var: result.content

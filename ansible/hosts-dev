@@ -1,0 +1,5 @@
+#hosts-dev
+
+[webservers]
+server ansible_host=34.118.99.138
+
